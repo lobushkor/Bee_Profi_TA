@@ -1,0 +1,67 @@
+{% extends 'base.html' %} 
+
+{% block header %}
+
+<div class="container">
+    <div class="row">
+        <!-- Ліва колонка для відображення профілю користувача -->
+        <div class="col-md-6">
+            <div class="center">
+                <form method="POST" enctype="multipart/form-data" class="card">
+                    {% csrf_token %}
+
+                    {% if user.profile %}
+                        <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}" class="avatar"  accept=".jpg,.jpeg,.png"/>
+                    {% endif %}
+                    
+                    <h2 class="text-center">{{ user.username | title }}</h2>
+                    <p class="text-center"><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+                    <hr>
+
+                    <label for="first_name">Ім'я:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{user.first_name}}" />
+
+                    <label for="last_name">Призвище:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{user.last_name}}" />
+
+                    <label for="city">Місто:</label>
+                    <input type="text" id="city" name="city" value="{{user.city}}" />
+
+                    <label for="phone">Телефон:</label>
+                    <input type="number" id="phone" name="phone" value="{{user.phone}}" />
+
+                    <label for="email">e-mail:</label>
+                    <input type="email" id="email" name="email" value="{{user.email}}" />
+
+                    <label for="avatar">Аватар:</label>
+                    <input type="file" name="avatar" id="avatar">    
+                    
+                    <button type="submit" class="btn btn-primary full-width">Оновити профіль</button>
+                
+                </form>
+            </div>
+        </div>
+        
+        <!-- Права колонка для відображення tour_requests -->
+        <div class="col-md-6">
+            <h2>Мої туристичні запити</h2>
+            <ul class="tour-requests">
+                {% for request in tour_requests %}
+                    <li class="tour-request">
+                    <div class="tour-request-content">
+                        <p>Країна: {{ request.country }}</p>
+                        <p>Готель: {{ request.hotel }}</p>
+                        <p>Кількісьть ночей: {{ request.nights }}</p>
+                        <p>Кількість дорослих: {{ request.pax }}</p>
+                        <p>Кількісьть дітей: {{ request.child }}</p>
+                        <p>Додаткова інформація: {{ request.client_text }}</p>
+                        <p>Статус: {{ request.status }}</p>
+                    </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock header %}
+{% block footer %}{% endblock footer %}

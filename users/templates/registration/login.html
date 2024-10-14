@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вхід</title>
+    {% extends "main_page/base.html" %}
+    {% load static %}
+    {% block header %}
+</head>
+<body>
+    <div class="center">
+	  <form method="post" class="card" novalidate>
+	  	{% csrf_token %}
+	    <h2 class="text-center">Вхід до Вашого аккаунту</h2>
+		{% for field in login_form %}
+	    		{{ field.label_tag }}
+	        	{{ field }}
+	        	{% if field.errors %}
+	        		<small>{{ field.errors|striptags }}</small>
+	        	{% endif %}
+		{% endfor %}
+
+		<input type="submit" value="Login" class="btn btn-primary full-width">
+		<hr>
+		<p class="text-center">Забули пароль? <a href="{% url 'users:password_reset' %}">Відновити пароль</a></p>
+		<p class="text-center">Немає акаунту? <a href="{% url 'users:register' %}">Реєстрація</a></p>
+	</form>
+</div>
+
+</body>
+{% endblock header %}
+{% block footer %}{% endblock footer %}
+</html>

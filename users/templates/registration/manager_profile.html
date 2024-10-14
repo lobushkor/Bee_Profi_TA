@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Кабінет менеджера</title>
+    {% extends "main_page/base.html" %}
+  {% block header %}
+</head>
+<body>
+<h1>Кабінет менеджера</h1>
+
+{% if tour_requests %}
+{% for request in tour_requests %}
+    <div>
+        <p>Клієнт: {{ request.client.user.get_full_name }}</p>
+        <p>Телефон: {{ request.client.user.phone }}</p>
+        <p>Країна: {{ request.country }}</p>
+        <p>Готель: {{ request.hotel }}</p>
+        <p>Кількісьть ночей: {{ request.nights }}</p>
+        <p>Кількісьть дорослих: {{ request.pax }}</p>
+        <p>Кількість дітей: {{ request.child }}</p>
+        <p>Додаткова інформація: {{ request.client_text }}</p>
+        <p>Статус: {{ request.status }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="request_id" value="{{ request.id }}">
+            <select name="action">
+                <option value="start_work">Почати роботу</option>
+                <option value="finish_work">Завершити роботу</option>
+            </select>
+            <button type="submit">Виконати</button>
+        </form>
+    </div>
+    <hr>
+{% endfor %}
+{% else %}
+    <p>Немає запитів на тур.</p>
+{% endif %}
+</body>
+{% endblock header %}
+{% block footer %}{% endblock footer %}
+</html>

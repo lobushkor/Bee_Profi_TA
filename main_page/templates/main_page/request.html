@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Запит</title>
+{% extends "main_page/base.html" %}
+    {% block header %}
+</head>
+<body>
+        <div class="center">
+            <form method="post">
+            {% csrf_token %}
+            <h2 class="text-center">Залиште Ваш запит</h2>
+            {{ form.as_p }}
+            <input type="submit" value="Відправити" class="btn btn-primary full-width">
+            </form>
+        </div>
+
+</body>
+    {% endblock header %}
+    {% block footer %}{% endblock footer %}
+</html>
